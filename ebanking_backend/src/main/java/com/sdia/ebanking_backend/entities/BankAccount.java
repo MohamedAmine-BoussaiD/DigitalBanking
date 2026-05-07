@@ -13,7 +13,7 @@ import java.util.List;
 @DiscriminatorColumn(name="TYPE", discriminatorType = DiscriminatorType.STRING)
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class BankAccount {
+public  class  BankAccount {
 
     @Id
     private String id ;

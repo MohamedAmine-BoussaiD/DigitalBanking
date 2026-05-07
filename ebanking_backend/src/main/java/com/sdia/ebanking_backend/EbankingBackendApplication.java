@@ -1,9 +1,6 @@
 package com.sdia.ebanking_backend;
 
-import com.sdia.ebanking_backend.entities.CurrentAccount;
-import com.sdia.ebanking_backend.entities.Customer;
-import com.sdia.ebanking_backend.entities.Operation;
-import com.sdia.ebanking_backend.entities.SavingAccount;
+import com.sdia.ebanking_backend.entities.*;
 import com.sdia.ebanking_backend.enums.AccountStatus;
 import com.sdia.ebanking_backend.enums.OperationType;
 import com.sdia.ebanking_backend.repositories.BankAccountRepository;
@@ -76,6 +73,25 @@ public class EbankingBackendApplication {
                 }
 
             });
+
+            BankAccount bankAccount =
+                    bankAccountRepository.findById("d173c4f6-0992-4375-aafe-db62662236ec")
+                    .orElse(null);
+
+            System.out.println("********************");
+            System.out.println(bankAccount.getId());
+            System.out.println(bankAccount.getBalance());
+            System.out.println(bankAccount.getCreatedAt());
+            System.out.println(bankAccount.getStatus());
+            System.out.println(bankAccount.getCustomer().getName());
+            System.out.println(bankAccount.getClass());
+
+            if (bankAccount instanceof SavingAccount) {
+                System.out.println(((SavingAccount)bankAccount).getInterestRate());
+            }
+            else {
+                System.out.println(((CurrentAccount)bankAccount).getOverdraft());
+            }
 
 
         };
