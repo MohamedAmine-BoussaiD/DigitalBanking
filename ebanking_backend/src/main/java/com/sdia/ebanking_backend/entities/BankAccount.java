@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 @Entity
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TYPE", discriminatorType = DiscriminatorType.STRING)
+
 @Data @AllArgsConstructor @NoArgsConstructor
 public class BankAccount {
 
@@ -16,8 +20,11 @@ public class BankAccount {
 
     private Date createdAt ;
     private double balance ;
+
+    @Enumerated(EnumType.STRING)
     private AccountStatus status ;
-    private String currency ;
+
+//    private String currency ;
 
     @ManyToOne
     private Customer customer ;
