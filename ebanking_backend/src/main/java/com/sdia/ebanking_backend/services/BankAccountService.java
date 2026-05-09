@@ -1,6 +1,9 @@
 package com.sdia.ebanking_backend.services;
 
+import com.sdia.ebanking_backend.dtos.BankAccountDTO;
+import com.sdia.ebanking_backend.dtos.CurrentBankAccountDTO;
 import com.sdia.ebanking_backend.dtos.CustomerDTO;
+import com.sdia.ebanking_backend.dtos.SavingBankAccountDTO;
 import com.sdia.ebanking_backend.entities.BankAccount;
 import com.sdia.ebanking_backend.entities.CurrentAccount;
 import com.sdia.ebanking_backend.entities.Customer;
@@ -13,15 +16,15 @@ import java.util.List;
 
 public interface BankAccountService {
 
-    CurrentAccount saveCurrentBankAccount(double initialBalance , double OverDraft, Long customerId) throws CustomerNotFoundException;
-    SavingAccount saveSavingBankAccount(double initialBalance , double interestRate , Long custoemrId) throws CustomerNotFoundException;
+    CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance , double OverDraft, Long customerId) throws CustomerNotFoundException;
+    SavingBankAccountDTO saveSavingBankAccount(double initialBalance , double interestRate , Long custoemrId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
-    BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
+    BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
     void debit(String accountId, double amount , String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
     void credit(String accountId ,  double amount , String description) throws BankAccountNotFoundException;
     void transfer(String accountIdSource , String accountIdDestination , double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
 
-    List<BankAccount> bankAccountList();
+    List<BankAccountDTO> bankAccountList();
     CustomerDTO getCustomer(Long id) throws CustomerNotFoundException;
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CustomerDTO updateCustomer(CustomerDTO customerDTO);

@@ -1,6 +1,9 @@
 package com.sdia.ebanking_backend;
 
+import com.sdia.ebanking_backend.dtos.BankAccountDTO;
+import com.sdia.ebanking_backend.dtos.CurrentBankAccountDTO;
 import com.sdia.ebanking_backend.dtos.CustomerDTO;
+import com.sdia.ebanking_backend.dtos.SavingBankAccountDTO;
 import com.sdia.ebanking_backend.entities.*;
 import com.sdia.ebanking_backend.enums.AccountStatus;
 import com.sdia.ebanking_backend.enums.OperationType;
@@ -95,13 +98,20 @@ public class EbankingBackendApplication {
 
           bankAccountService.listCustomers().forEach(customer ->{
               try {
+                  CurrentBankAccountDTO currentBankAccountDTO = new CurrentBankAccountDTO();
                   bankAccountService.saveCurrentBankAccount(Math.random()*90000 , 9000 , customer.getId());
                   bankAccountService.saveSavingBankAccount(Math.random()*120000 , 5.5 , customer.getId());
-                  List<BankAccount>bankAccountList = bankAccountService.bankAccountList();
-                  for(BankAccount bankAccount : bankAccountList){
+                  List<BankAccountDTO>bankAccountList = bankAccountService.bankAccountList();
+                  for(BankAccountDTO bankAccount : bankAccountList){
                       for (int i=0;i<10;i++){
-                          bankAccountService.credit(bankAccount.getId() , 100000+Math.random()*120000 , "Credit");
-                          bankAccountService.debit(bankAccount.getId() , 1000+Math.random()*9000 , "Debit");
+                          String accountId;
+                          if(bankAccount instanceof SavingBankAccountDTO){
+                              accountId = ((SavingBankAccountDTO) bankAccount).getId();
+                          } else {
+                              accountId = ((CurrentBankAccountDTO)bankAccount).getId();
+                          }
+                          bankAccountService.credit(accountId , 100000+Math.random()*120000 , "Credit");
+                          bankAccountService.debit(accountId  , 1000+Math.random()*9000 , "Debit");
                       }
                   }
               } catch (CustomerNotFoundException e) {
