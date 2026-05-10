@@ -2,9 +2,11 @@ package com.sdia.ebanking_backend.mappers;
 
 import com.sdia.ebanking_backend.dtos.CurrentBankAccountDTO;
 import com.sdia.ebanking_backend.dtos.CustomerDTO;
+import com.sdia.ebanking_backend.dtos.OperationDTO;
 import com.sdia.ebanking_backend.dtos.SavingBankAccountDTO;
 import com.sdia.ebanking_backend.entities.CurrentAccount;
 import com.sdia.ebanking_backend.entities.Customer;
+import com.sdia.ebanking_backend.entities.Operation;
 import com.sdia.ebanking_backend.entities.SavingAccount;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -54,5 +56,17 @@ public class BankAccountMapperImpl {
         BeanUtils.copyProperties(savingAccountDTO , savingAccount);
         savingAccount.setCustomer(fromCustomerDTOToCustomer(savingAccountDTO.getCustomerDTO()));
         return savingAccount ;
+    }
+
+    public OperationDTO fromOperationToOperationDTO(Operation operation){
+        OperationDTO operationDTO = new OperationDTO();
+        BeanUtils.copyProperties(operation , operationDTO);
+        return operationDTO;
+    }
+
+    public Operation fromOperationDTOToOperation(OperationDTO operationDTO){
+        Operation operation = new Operation();
+        BeanUtils.copyProperties(operationDTO , operation);
+        return operation;
     }
 }

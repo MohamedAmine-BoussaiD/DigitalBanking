@@ -1,9 +1,6 @@
 package com.sdia.ebanking_backend.services;
 
-import com.sdia.ebanking_backend.dtos.BankAccountDTO;
-import com.sdia.ebanking_backend.dtos.CurrentBankAccountDTO;
-import com.sdia.ebanking_backend.dtos.CustomerDTO;
-import com.sdia.ebanking_backend.dtos.SavingBankAccountDTO;
+import com.sdia.ebanking_backend.dtos.*;
 import com.sdia.ebanking_backend.entities.*;
 import com.sdia.ebanking_backend.enums.OperationType;
 import com.sdia.ebanking_backend.exceptions.BalanceNotSufficientException;
@@ -18,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -200,5 +196,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public void deleteCustomer(Long id){
         customerRepository.deleteById(id);
+    }
+
+    @Override
+    public List<OperationDTO> accountHistory(String accountId){
+        List<Operation> operationList = operationRepository.findByBankAccountId(accountId);
+        List<OperationDTO> operationListDTO = operationList.stream()
+                .map(operation -> dtoMapper.fromOperationToOperationDTO(operation))
+                .collect(Collectors.toList());
+        return operationListDTO;
     }
 }

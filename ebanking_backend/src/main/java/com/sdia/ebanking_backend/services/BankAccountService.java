@@ -1,9 +1,6 @@
 package com.sdia.ebanking_backend.services;
 
-import com.sdia.ebanking_backend.dtos.BankAccountDTO;
-import com.sdia.ebanking_backend.dtos.CurrentBankAccountDTO;
-import com.sdia.ebanking_backend.dtos.CustomerDTO;
-import com.sdia.ebanking_backend.dtos.SavingBankAccountDTO;
+import com.sdia.ebanking_backend.dtos.*;
 import com.sdia.ebanking_backend.entities.BankAccount;
 import com.sdia.ebanking_backend.entities.CurrentAccount;
 import com.sdia.ebanking_backend.entities.Customer;
@@ -29,4 +26,6 @@ public interface BankAccountService {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
     void deleteCustomer(Long id);
+
+    List<OperationDTO> accountHistory(String accountId);
 }
