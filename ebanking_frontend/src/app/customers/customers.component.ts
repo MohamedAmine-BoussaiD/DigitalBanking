@@ -5,10 +5,11 @@ import {CustomerService} from '../services/customer.service';
 import {catchError, Observable, of, throwError} from 'rxjs';
 import {Customer} from '../model/customer.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-customers',
-  imports: [NgIf, JsonPipe, NgForOf, AsyncPipe, ReactiveFormsModule],
+  imports: [NgIf, JsonPipe, NgForOf, AsyncPipe, ReactiveFormsModule, RouterLink],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css'
 })
@@ -44,5 +45,16 @@ export class CustomersComponent implements OnInit {
         return throwError(err);
       })
     )
+  }
+
+  protected handleDeleteCustomer(id: number) {
+    this.customerService.deleteCustomer(id).subscribe({
+      next: ()=> {
+        this.handleSearchCustomers();
+      },
+      error: (err)=> {
+        console.log(err)
+      }
+    })
   }
 }

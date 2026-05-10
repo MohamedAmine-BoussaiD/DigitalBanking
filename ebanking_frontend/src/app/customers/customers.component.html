@@ -10,7 +10,9 @@
             <div class="input-group">
               <label class="input-group-text">keyword :</label>
               <input type="text" formControlName="keyword" class="form-control">
-              <button class="btn btn-info">Search</button>
+              <button class="btn btn-info">
+                <i class="bi bi-search"></i>
+              </button>
             </div>
           </form>
         </div>
@@ -21,6 +23,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -28,6 +31,11 @@
             <td>{{customer.id}}</td>
             <td>{{customer.name}}</td>
             <td>{{customer.email}}</td>
+            <td>
+              <button (click)="handleDeleteCustomer(customer.id)" class="btn btn-danger p-2 m-2">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
           </tr>
           </tbody>
         </table>
