@@ -1,0 +1,28 @@
+<div class="container mt-3">
+  <div class="card" *ngIf="customers">
+    <div class="card-header">
+        Customers List
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (customer of customers ; track customer ){
+          <tr>
+            <td>{{customer.id}}</td>
+            <td>{{customer.name}}</td>
+            <td>{{customer.email}}</td>
+          </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
