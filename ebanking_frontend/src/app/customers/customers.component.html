@@ -1,28 +1,47 @@
 <div class="container mt-3">
-  <div class="card" *ngIf="customers">
-    <div class="card-header">
+  <ng-container *ngIf="customers | async as listCustomers ; else failureOrLoading">
+    <div class="card">
+      <div class="card-header">
         Customers List
-    </div>
-    <div class="card-body">
-      <table class="table">
-        <thead>
+      </div>
+      <div class="card-body">
+        <div *ngIf="searchFormGroup">
+          <form [formGroup]="searchFormGroup"  (ngSubmit)="handleSearchCustomers()">
+            <div class="input-group">
+              <label class="input-group-text">keyword :</label>
+              <input type="text" formControlName="keyword" class="form-control">
+              <button class="btn btn-info">Search</button>
+            </div>
+          </form>
+        </div>
+
+        <table class="table">
+          <thead>
           <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
           </tr>
-        </thead>
-        <tbody>
-          @for (customer of customers ; track customer ){
-          <tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let customer of customers | async">
             <td>{{customer.id}}</td>
             <td>{{customer.name}}</td>
             <td>{{customer.email}}</td>
           </tr>
-          }
-
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
+  </ng-container>
+  <ng-template #failureOrLoading >
+    <ng-container *ngIf="errorMessage ; else loading ">
+      <div class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      Loading ....
+    </ng-template>
+  </ng-template>
 </div>
